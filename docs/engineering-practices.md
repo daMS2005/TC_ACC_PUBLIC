@@ -80,9 +80,10 @@ passed every property check and was visibly broken.
 
 ## 9. Measurement outranks opinion
 
-Disagreements are settled by measuring. Several conclusions here were reversed
-by measurement, including two diagnoses that were stated and then retracted when
-the evidence did not support them.
+Disagreements are settled by measuring. Several conclusions recorded in the
+incident log were reversed once the evidence was gathered — see
+[incidents.md](incidents.md), where the discarded diagnoses are kept alongside
+the causes that replaced them.
 
 A related discipline: a long test run is only meaningful against the tree it ran
 on. If the working tree moved during the run, the result is void — not a bug to
