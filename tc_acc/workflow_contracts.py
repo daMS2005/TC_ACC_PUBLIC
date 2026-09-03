@@ -53,6 +53,11 @@ class IssueStatus(StrEnum):
     RESOLVED = "resolved"
 
 
+class ReviewGate(StrEnum):
+    PREPRODUCTION = "preproduction"
+    EDIT = "edit"
+
+
 # ... the remainder of this module -- the issue records themselves, routing,
 # and the per-stage contracts that consume them -- is omitted from this
 # public excerpt. The vocabulary above is the part worth reading: failure in

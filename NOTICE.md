@@ -30,15 +30,14 @@ Each package's `__init__.py` states what it holds and what was withheld.
 
 ## Included
 
-- Eighteen real Python modules and one TypeScript module, chosen for craft
+- Thirteen real Python modules and one TypeScript module, chosen for craft
   and low disclosure risk
 - Two excerpts (`stages.py`, `workflow_contracts.py`) showing the contracts that
   shape the system, with the bulk elided and marked
 - The real tests for the included modules — they pass as published (46)
 - The config's full key structure with every value replaced by a type marker
-- Architecture, engineering practices, and debugging write-ups — written for
-  this repository rather than copied, so no configured value or prompt text
-  appears by accident
+- Architecture — written for this repository rather than copied, so no
+  configured value or prompt text appears by accident
 
 ---
 

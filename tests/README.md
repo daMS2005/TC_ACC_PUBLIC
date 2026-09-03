@@ -1,8 +1,8 @@
 # Tests
 
-2,657 tests in the full suite, run as a preflight gate before any paid API
-call — with provider credentials blanked, so a green preflight proves the tree
-rather than the credentials.
+The full suite runs as a preflight gate before any paid API call — with
+provider credentials blanked, so a green preflight proves the tree rather than
+the credentials.
 
 The files here are the real tests for the modules included in this
 excerpt, and **they pass against the code as published**:

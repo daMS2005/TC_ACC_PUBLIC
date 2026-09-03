@@ -121,7 +121,7 @@ _stage(
     artifact_outputs=("asset_visual_validation",),
     setting_fields=("vision_model", "asset_review_floor"),
     source_fingerprint_paths=("tc_acc/assets/review.py",),
-    provider_requirements=(Provider.VISION,),
+    provider_requirements=("vision",),
     coordination_gates=(ReviewGate.PREPRODUCTION,),
 )
 ```
@@ -246,7 +246,7 @@ tc_acc/
 ├── models.py               ** the domain model
 ├── editorial_contracts.py  ** editorial output contracts
 ├── workflow_contracts.py   *  excerpt — the issue ledger
-├── studio/stages.py        *  excerpt — stage contract + 3 of 29 stages
+├── studio/stages.py        *  excerpt — stage contract + 2 of 29 stages
 ├── assets/preview.py       ** the review-preview generator
 ├── publish.py              ** packaging a finished episode
 ├── storage.py utils.py identifiers.py coercion.py
@@ -280,10 +280,6 @@ path.
 ## Further reading
 
 - [docs/architecture.md](docs/architecture.md) — the long form of the above
-- [docs/engineering-practices.md](docs/engineering-practices.md) — ten rules,
-  each traceable to a specific failure
-- [docs/incidents.md](docs/incidents.md) — four debugging write-ups: root cause,
-  fix, and the measurement that confirmed it
 
 ---
 
