@@ -117,15 +117,9 @@ def _inspect_candidate_audio(local_source: Path) -> dict[str, Any]:
         }
 
 
-# What each image format actually starts with. This is the same table
-# stage-assets.mjs applies in `sniffImageExtension`, and it is here because
-# that sniffer should never have been the first place it was needed: the
-# staged file is named from a preview source that was itself named from the
-# provider's claim. Measured on run v2-full5-20260811-01, five of the twenty
-# three surviving `source.jpg` files under `asset_previews/` are not JPEG --
-# three PNG and two WebP. PIL opens them anyway because `Image.open` sniffs
-# content, so the misnaming costs nothing here and everything downstream,
-# where a name is all the next stage has to go on.
+# Identify image formats from file signatures rather than provider filenames.
+# Correct extensions let downstream stages select the appropriate decoder.
+# Keep this table aligned with stage-assets.mjs sniffImageExtension.
 _IMAGE_MAGIC: tuple[tuple[str, int, bytes], ...] = (
     (".png", 0, b"\x89PNG\r\n\x1a\n"),
     (".jpg", 0, b"\xff\xd8\xff"),
