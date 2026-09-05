@@ -348,15 +348,7 @@ def test_a_disambiguator_is_refused_when_the_base_is_ambiguous():
 
 
 def test_a_truncated_hash_finds_no_match_because_that_boundary_speaks_handles():
-    """The truncated-prefix fallback from 17b9348a is gone, on review.
-
-    v2-full8-20260816-01 wrote ``...-cdcad10`` for an id ending ``-cdcad10c``
-    and a unique-prefix guess briefly absorbed it here. The refinement
-    boundary that produced the truncation now hands the model short
-    deterministic handles instead of ids to transcribe (see
-    test_asset_refinement_scenes), so the exact-hash contract holds again:
-    a hash that matches nothing exactly resolves to nothing.
-    """
+    """Reject truncated hashes even when they uniquely prefix a known hash."""
     from tc_acc.identifiers import repair_reference_by_hash
 
     known = {
