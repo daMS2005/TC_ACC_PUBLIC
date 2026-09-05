@@ -118,14 +118,8 @@ def repair_reference_by_hash(reference: str, known_ids: set[str]) -> str:
     matches = [
         known for known in known_ids if known.lower().endswith(f"-{tail}")
     ]
-    # Exact hash or nothing -- a truncated hash deliberately finds no match
-    # here. A unique-PREFIX fallback briefly lived at this line after
-    # v2-full8-20260816-01 wrote ``...-cdcad10`` for an id ending
-    # ``-cdcad10c``, and it was removed on review: guessing what the model
-    # meant is the model's job leaking into the referee. The boundary that
-    # produced that truncation (asset-plan refinement) now hands the model
-    # short deterministic handles and never asks it to transcribe an id, so
-    # the error is structurally impossible there rather than absorbed here.
+    # Require a complete, unique hash match. A truncated prefix does not
+    # establish asset identity, even if only one known hash starts with it.
     return matches[0] if len(matches) == 1 else ""
 
 

@@ -159,15 +159,10 @@ def sniff_image_extension(path: Path) -> str | None:
 
 
 def _describe_undecodable(path: Path) -> str:
-    """What a file that PIL refused actually turned out to be.
+    """Describe the leading bytes of a file that PIL could not decode.
 
-    Run v2-full5-20260811-01 lost candidates to a bare "cannot identify image
-    file <path>", which names the file and says nothing about it. Every one of
-    the 58 that could still be traced was an HTML document -- 43 googletagmanager
-    `ns.html` tracking iframes, 9 youtube `/embed/` pages, the rest widget and
-    player embeds -- harvested as image candidates and correctly refused. That
-    took a byte-level dig to establish because the message withheld the one
-    fact that explains it. It does not withhold it now.
+    Distinguish HTML responses from image data to make decode failures useful
+    for diagnosing invalid download candidates.
     """
 
     try:
@@ -522,24 +517,11 @@ def discard_preview_source(preview: dict[str, Any], episode_dir: Path) -> bool:
 
 
 def _flatten_for_review(image: "Image.Image") -> "Image.Image":
-    """Drop transparency in a way that keeps the picture visible.
+    """Composite transparency onto white before converting to RGB.
 
-    `convert("RGB")` discards the alpha channel and keeps whatever RGB sits
-    *underneath* a transparent pixel. For a glyph cut out of a solid tile --
-    every app icon and logo on the web -- that underlying colour is the tile
-    itself, so the glyph vanishes and the preview becomes a blank rectangle.
-
-    That is not cosmetic. The vision reviewer judges `preview.jpg`, while the
-    renderer uses the source file, so a preview that erases its subject means
-    the reviewer never sees what ships. On v2-full9-20260817-01 an X app icon
-    was scraped from a 403-ing garda.ie page and filed as "derry bus depot
-    cctv"; its preview flattened to a plain blue square, 30 assets shared that
-    identical square, and the icon reached the screen at 1:17 of the delivered
-    episode. Regenerating the preview from the icon reproduces the stored
-    square byte for byte -- the reviewer was shown our corruption, not the
-    asset, and a reviewer failed by machine echo is our bug, not its.
-
-    Compositing onto white keeps the cut-out visible as its own shape.
+    Direct RGB conversion discards alpha and exposes hidden pixel colors,
+    which can obscure the visible subject. Compositing preserves its shape
+    so the review preview represents the source image used by the renderer.
     """
 
     has_alpha = image.mode in {"RGBA", "LA"} or (
@@ -605,4 +587,3 @@ def _extract_video_frames(
         )
         raw_path.unlink(missing_ok=True)
     return frames
-

@@ -612,18 +612,9 @@ class VoiceManifest:
     # any episode whose writer produced no presentation copy, which is every
     # episode recorded before the writer had the fields.
     presentation_segments: list[dict[str, Any]] = field(default_factory=list)
-    # Set only when `provider` above is NOT the provider the show is configured
-    # to narrate with -- in practice, when the episode was voiced on OpenAI TTS,
-    # which is this studio's testing voice and not a peer narrator.
-    # `provider`/`voice_name` have always been truthful about what did the
-    # recording, which is exactly why the manifest was misleading on its own: a
-    # run that fell back because ElevenLabs was out of quota wrote
-    # `provider: openai` and said nothing about the ElevenLabs voice it was
-    # supposed to be, so a test-grade narration was indistinguishable from a
-    # configured one. That contradiction was recorded only in the timing
-    # artifact, and reading the two files against each other is what it cost to
-    # explain the wrong voice on v2-full7-20260815-01. Empty on every episode
-    # narrated as configured.
+    # Records a deviation from the configured narration provider; empty when
+    # narration uses that provider. `provider` and `voice_name` describe the
+    # actual recording, while this field identifies fallback narration.
     provider_fallback: dict[str, Any] = field(default_factory=dict)
     issues: list[str] = field(default_factory=list)
 
